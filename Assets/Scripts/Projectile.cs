@@ -2,31 +2,40 @@
 using System.Collections;
 
 public class Projectile : MonoBehaviour {
+	public float damage { get; private set; }
+
 	Enemy target;
 	float speed;
 
 	// Initialization
 	void Awake () {
-		speed = 2.0f;
+		speed = 1.5f;
+		damage = 25f;
 	}
 	
 	// Called once per frame
 	void Update () {
+		// The target is still alive
 		if(target != null) {
-			// VERY BASIC MOVEMENT, CHANGE THIS
-			if (transform.position.x < target.transform.position.x)
-				transform.Translate(new Vector3(0.01f * speed, 0, 0), Space.World);
-			if (transform.position.x > target.transform.position.x)
-				transform.Translate(new Vector3(-0.01f * speed, 0, 0), Space.World);
-			if (transform.position.y < target.transform.position.y)
-				transform.Translate(new Vector3(0, 0.01f * speed, 0), Space.World);
-			if (transform.position.y > target.transform.position.y)
-				transform.Translate(new Vector3(0, -0.01f * speed, 0), Space.World);
+			float step = speed * Time.deltaTime;
+			transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
+		}
+		// No more target
+		else {
+			Destroy(gameObject); // Remove the projectile from the game
+		}
+	}
+
+	// Colliding with another object
+	void OnTriggerEnter2D(Collider2D col) {
+		// Colliding with an enemy
+		if(col.gameObject.tag == "Enemy") {
+			Destroy(gameObject); // Remove the projectile from the game
 		}
 	}
 
 	// Set the target of the projectile
-	public void SetTarget(Enemy en) {
-		target = en;
+	public void SetTarget(Enemy enemy) {
+		target = enemy;
 	}
 }

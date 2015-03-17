@@ -11,7 +11,7 @@ public class Game : MonoBehaviour {
 
 	// Creation of the game
     void Awake() {
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
         instance = this;
     }
 
@@ -23,20 +23,20 @@ public class Game : MonoBehaviour {
 	// Initialization
 	void Start () {
         grid = (Grid)((GameObject)Instantiate(gridPrefab, new Vector3(0, 0, 5), Quaternion.identity)).GetComponent("Grid");
-        enemyTest = (Enemy)((GameObject)Instantiate(enemyPrefab, grid.GetWaypoint(0).transform.position, Quaternion.identity)).GetComponent("Enemy");
 	}
 	
 	// Called once per frame
 	void Update () {
-	
+		if (Input.GetKeyDown("space")) {
+			Enemy enemy = (Enemy)((GameObject)Instantiate(enemyPrefab, grid.GetWaypoint(0).transform.position, Quaternion.identity)).GetComponent("Enemy");
+		}
 	}
 
     public Waypoint GetWaypoint(int index) {
         return grid.GetWaypoint(index);
     }
 
-	public void LoseLife(Enemy en) {
-		Destroy(en);
+	public void LoseLife() {
 		// Add stuff to lower life count
 	}
 }
