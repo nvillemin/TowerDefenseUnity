@@ -2,20 +2,18 @@
 using System.Collections;
 
 public class Enemy : MonoBehaviour {
-	float speed, health; // Movement speed and health of the enemy
+	protected float speed, health; // Movement speed and health of the enemy
     int waypointIndex; // Index of the next waypoint
 	Waypoint nextWaypoint; // Next waypoint to reach
 
 	// Initialization
-	void Awake () {
-		speed = 0.8f;
-		health = 100.0f;
+	public virtual void Awake () {
         waypointIndex = 1;
         nextWaypoint = Game.Instance.GetWaypoint(1);
 	}
-	
+
 	// Called once per frame
-	void Update () {
+	protected void Update () {
 		// Still hasn't reached the last waypoint
 		if(nextWaypoint != null) {
 			transform.Rotate(Vector3.back, 2); // Rotate animation
@@ -61,5 +59,9 @@ public class Enemy : MonoBehaviour {
 	void Move() {
 		float step = speed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards(transform.position, nextWaypoint.transform.position, step);
+	}
+
+	public void SetHealth(float health) {
+		this.health = health;
 	}
 }

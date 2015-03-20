@@ -18,11 +18,6 @@ public class Grid : MonoBehaviour {
         CreateSquares();
 	}
 
-    // Called once per frame
-    void Update() {
-	
-	}
-
 	// Creation of the squares
 	void CreateSquares() {
 		bool[,] path;
@@ -55,21 +50,21 @@ public class Grid : MonoBehaviour {
 		for (int i = 0; i < width; ++i) {
 			for (int j = 0; j < height; ++j) {
 				if(!path[i, j]) {
-					squares[i, j] = (Square)((GameObject)Instantiate(squarePrefab, new Vector3(0.05f + (float)i * 0.4f, -0.02f + (float)j * -0.4f, 5), Quaternion.identity)).GetComponent("Square");
+					squares[i, j] = (Square)((GameObject)Instantiate(squarePrefab, new Vector3((float)i * 0.4f, (float)j * -0.4f, 5), Quaternion.identity)).GetComponent("Square");
 				}
 			}
 		}
 
 		// Initialization of the waypoints positions
 		List<Vector3> wpPositions = new List<Vector3> {
-			new Vector3(1.25f, -0.02f, 5f), // Waypoint 0
-			new Vector3(1.25f, -1.29f, 5f), // Waypoint 1
-			new Vector3(5.32f, -1.22f, 5f), // Waypoint 2
-			new Vector3(5.25f, -2.89f, 5f), // Waypoint 3
-			new Vector3(1.18f, -2.82f, 5f), // Waypoint 4
-			new Vector3(1.25f, -4.49f, 5f), // Waypoint 5
-			new Vector3(5.32f, -4.42f, 5f), // Waypoint 6
-			new Vector3(5.25f, -6.02f, 5f)  // Waypoint 7
+			new Vector3(1.20f, -0.00f, 5f), // Waypoint 0
+			new Vector3(1.20f, -1.27f, 5f), // Waypoint 1
+			new Vector3(5.27f, -1.20f, 5f), // Waypoint 2
+			new Vector3(5.20f, -2.87f, 5f), // Waypoint 3
+			new Vector3(1.13f, -2.80f, 5f), // Waypoint 4
+			new Vector3(1.20f, -4.47f, 5f), // Waypoint 5
+			new Vector3(5.27f, -4.40f, 5f), // Waypoint 6
+			new Vector3(5.20f, -6.00f, 5f)  // Waypoint 7
 		};
 
 		// Creating the waypoints for the enemies
