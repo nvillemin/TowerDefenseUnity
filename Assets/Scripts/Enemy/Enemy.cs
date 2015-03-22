@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	// Called once per frame
-	protected void Update () {
+	void Update () {
 		// Still hasn't reached the last waypoint
 		if(nextWaypoint != null) {
 			transform.Rotate(Vector3.back, 2); // Rotate animation

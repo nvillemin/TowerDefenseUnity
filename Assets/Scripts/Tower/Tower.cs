@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Tower : MonoBehaviour {
-	public GameObject projectilePrefab;
+	protected GameObject projectilePrefab;
 
-	public float cooldown, cooldownMax; // Cooldown between shots
-	public List<Enemy> enemies; // Enemies in range of the tower
+	protected float cooldownMax;
+
+	float cooldown; // Cooldown between shots
+	List<Enemy> enemies; // Enemies in range of the tower
 
 	// Tower creation
-	void Awake () {
-		transform.GetComponent<CircleCollider2D>().radius = 1.5f; // Maximum range to target enemies
-		cooldown = 0f;
-		cooldownMax = 0.5f;
+	public virtual void Awake () {
 		enemies = new List<Enemy>();
+		cooldown = 0f;
 	}
 	
 	// Called once per frame
@@ -32,7 +32,7 @@ public class Tower : MonoBehaviour {
 
 		// Fire the projectile
 		if(enemies.Count > 0 && cooldown <= 0) {
-			Projectile proj = (Projectile)((GameObject)Instantiate(projectilePrefab, this.transform.position, Quaternion.identity)).GetComponent("Projectile");
+			Projectile proj = (Projectile)((GameObject)Instantiate(projectilePrefab, new Vector3(this.transform.position.x, this.transform.position.y, 4f), Quaternion.identity)).GetComponent("Projectile");
 			proj.SetTarget(enemies[0]); // Target first enemy
 			cooldown = cooldownMax; // Projectile fired, reset cooldown
 		}

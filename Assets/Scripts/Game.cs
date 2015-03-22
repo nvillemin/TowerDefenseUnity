@@ -4,9 +4,13 @@ using System.Collections;
 public class Game : MonoBehaviour {
     static Game instance;
     public static Game Instance { get { return instance; } }
-    
+    public string towerSelection { get; set; }
+	public GUIText lifesText, wavesText;
+
     Grid grid; // The grid of the game, containing the path and tower locations
 	Wave wave; // The actual wave of ennemies
+
+	int lifes; // Number of times enemies can reach the end before the game is over
 
 	// Creation of the game
     void Awake() {
@@ -14,6 +18,8 @@ public class Game : MonoBehaviour {
         instance = this;
 		grid = (Grid)transform.Find("Grid").gameObject.GetComponent("Grid");
 		wave = (Wave)transform.Find("Wave").gameObject.GetComponent("Wave");
+		towerSelection = "None";
+		lifes = 20;
     }
 
 	// Destruction of the game
@@ -25,11 +31,16 @@ public class Game : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown("space")) {
 			wave.Next();
+			wavesText.text = "WAVE " + wave.number;
+		}
+		else if (Input.GetKeyDown("escape")) {
+			towerSelection = "None";
 		}
 	}
 
 	public void LoseLife() {
-		// Add stuff to lower life count
+		lifes--;
+		lifesText.text = "LIFES: " + lifes;
 	}
 
 	public Waypoint GetWaypoint(int index) {
