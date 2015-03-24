@@ -13,5 +13,6 @@ public class TowerSelection : MonoBehaviour {
 			Game.Instance.towerSelection = "Blue";
 			break;
 		}
+		Game.Instance.HighlightObject(transform.position);
 	}
 }

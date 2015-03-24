@@ -6,6 +6,7 @@ public class Game : MonoBehaviour {
     public static Game Instance { get { return instance; } }
     public string towerSelection { get; set; }
 	public GUIText lifesText, wavesText;
+	public GameObject highlight; // Yellow highlight sprite for selections
 
     Grid grid; // The grid of the game, containing the path and tower locations
 	Wave wave; // The actual wave of ennemies
@@ -35,12 +36,18 @@ public class Game : MonoBehaviour {
 		}
 		else if (Input.GetKeyDown("escape")) {
 			towerSelection = "None";
+			highlight.GetComponent<SpriteRenderer>().enabled = false;
 		}
 	}
 
 	public void LoseLife() {
 		lifes--;
 		lifesText.text = "LIFES: " + lifes;
+	}
+
+	public void HighlightObject(Vector3 position) {
+		highlight.GetComponent<SpriteRenderer>().enabled = true;
+		highlight.transform.position = position;
 	}
 
 	public Waypoint GetWaypoint(int index) {

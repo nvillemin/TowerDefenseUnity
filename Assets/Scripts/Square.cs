@@ -13,6 +13,12 @@ public class Square : MonoBehaviour {
 		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
+	void OnMouseOver() { // Change this?
+		if (tower == null && Input.GetKeyDown("escape")) {
+			OnMouseExit();
+		}
+	}
+
     void OnMouseEnter() {
 		if (tower == null && Game.Instance.towerSelection != "None") {
 			spriteRenderer.material.color -= new Color(0, 0, 0, 0.35f);
