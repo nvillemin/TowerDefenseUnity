@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Square : MonoBehaviour {
-	public GameObject towerRedPrefab, towerBluePrefab;
+	public GameObject TowerAirPrefab, TowerFirePrefab, TowerWaterPrefab, TowerEarthPrefab;
 	public Sprite squareSprite;
 
 	GameObject currentTowerPrefab;
@@ -44,11 +44,17 @@ public class Square : MonoBehaviour {
 
 	void SetCurrentTower() {
 		switch(Game.Instance.towerSelection) {
-		case "Red":
-			currentTowerPrefab = towerRedPrefab;
+		case "Air":
+			currentTowerPrefab = TowerAirPrefab;
 			break;
-		case "Blue":
-			currentTowerPrefab = towerBluePrefab;
+		case "Fire":
+			currentTowerPrefab = TowerFirePrefab;
+			break;
+		case "Water":
+			currentTowerPrefab = TowerWaterPrefab;
+			break;
+		case "Earth":
+			currentTowerPrefab = TowerEarthPrefab;
 			break;
 		}
 	}

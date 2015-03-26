@@ -5,13 +5,13 @@ public class Game : MonoBehaviour {
     static Game instance;
     public static Game Instance { get { return instance; } }
     public string towerSelection { get; set; }
-	public GUIText lifesText, wavesText;
+	public GUIText lifesText, wavesText, moneyText;
 	public GameObject highlight; // Yellow highlight sprite for selections
 
     Grid grid; // The grid of the game, containing the path and tower locations
 	Wave wave; // The actual wave of ennemies
 
-	int lifes; // Number of times enemies can reach the end before the game is over
+	int lifes, money; // Number of times enemies can reach the end before the game is over and money available for towers
 
 	// Creation of the game
     void Awake() {
@@ -21,6 +21,7 @@ public class Game : MonoBehaviour {
 		wave = (Wave)transform.Find("Wave").gameObject.GetComponent("Wave");
 		towerSelection = "None";
 		lifes = 20;
+		money = 50;
     }
 
 	// Destruction of the game

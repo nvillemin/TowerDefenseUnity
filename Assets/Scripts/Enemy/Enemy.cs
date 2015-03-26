@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-public class Enemy : MonoBehaviour {
+public abstract class Enemy : MonoBehaviour {
 	protected float speed, health; // Movement speed and health of the enemy
+	protected float[] elemDamage; // Resistance against elements. (default 1.0->100% damage; 0.75->75% damage etc.)
+
     int waypointIndex; // Index of the next waypoint
 	Waypoint nextWaypoint; // Next waypoint to reach
 
 	// Initialization
 	public virtual void Awake () {
+		elemDamage = new float[4] { 1f, 1f, 1f, 1f };
+		health = 1f;
+		speed = 0.8f;
         waypointIndex = 1;
         nextWaypoint = Game.Instance.GetWaypoint(1);
 	}
@@ -61,7 +66,7 @@ public class Enemy : MonoBehaviour {
 		transform.position = Vector3.MoveTowards(transform.position, nextWaypoint.transform.position, step);
 	}
 
-	public void SetHealth(float health) {
+	public virtual void SetHealth(float health) {
 		this.health = health;
 	}
 }
