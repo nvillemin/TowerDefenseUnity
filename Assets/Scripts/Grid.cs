@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public class Grid : MonoBehaviour {
     public GameObject squarePrefab, waypointPrefab;
 
-    Square[,] squares; // All the squares for tower creation are stored here
-    List<Waypoint> waypoints; // List of the waypoints used by the enemies to reach the end
-    int width, height; // Width and height of the grid (number of squares)
+	private Square[,] squares; // All the squares for tower creation are stored here
+	private List<Waypoint> waypoints; // List of the waypoints used by the enemies to reach the end
+	private int width, height; // Width and height of the grid (number of squares)
 	
 	// Grid creation
-	void Awake () {
+	private void Awake () {
 		width = 16;
         height = 14;
 		squares = new Square[width, height];
@@ -19,7 +19,7 @@ public class Grid : MonoBehaviour {
 	}
 
 	// Creation of the squares
-	void CreateSquares() {
+	private void CreateSquares() {
 		bool[,] path;
 		path = new bool[width, height];
 

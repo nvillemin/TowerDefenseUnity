@@ -3,20 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 
 public abstract class Tower : MonoBehaviour {
+	public int element;
+
 	protected GameObject projectilePrefab;
 	protected float cooldownMax, damage;
 
-	float cooldown; // Cooldown between shots
-	List<Enemy> enemies; // Enemies in range of the tower
-
+	private float cooldown; // Cooldown between shots
+	private List<Enemy> enemies; // Enemies in range of the tower
+	
 	// Tower creation
 	public virtual void Awake () {
+		transform.GetComponent<CircleCollider2D>().radius = Global.TowerStats[element].range; // Maximum range to target enemies
+		cooldownMax = Global.TowerStats[element].cooldown;
+		damage = Global.TowerStats[element].damage;
 		enemies = new List<Enemy>();
 		cooldown = 0f;
 	}
 	
 	// Called once per frame
-	void Update () {
+	private void Update () {
 		// Reduce the cooldown each frame
 		if(cooldown > 0) {
 			cooldown -= Time.deltaTime;
@@ -39,18 +44,20 @@ public abstract class Tower : MonoBehaviour {
 	}
 
 	// Object entering tower range
-	void OnTriggerEnter2D(Collider2D col) {
+	private void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.tag == "Enemy") { // Enemy entering tower range
 			Enemy en = col.gameObject.GetComponent<Enemy>();
-			this.enemies.Add(en);
+			enemies.Add(en);
 		}
 	}
 
 	// Object leaving tower range
-	void OnTriggerExit2D(Collider2D col) {
+	private void OnTriggerExit2D(Collider2D col) {
 		if (col.gameObject.tag == "Enemy") { // Enemy leaving tower range
 			Enemy en = col.gameObject.GetComponent<Enemy>();
 			enemies.Remove(en);
 		}
 	}
+
+	public int GetElement() { return this.element; }
 }

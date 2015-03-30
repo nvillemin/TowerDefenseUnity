@@ -6,9 +6,10 @@ public class EnemyAir : Enemy {
 	// Initialization
 	public override void Awake () {
 		base.Awake();
-		elemDamage[(int)Elements.Air] = 0.75f;
-		elemDamage[(int)Elements.Fire] = 1.25f;
+		elemDamage[(int)Global.Elements.Air] = 0.75f;
+		elemDamage[(int)Global.Elements.Fire] = 1.25f;
 		speed = 1f; // Air enemies are faster than other enemies
+		reward = 1;
 	}
 
 	public override void SetHealth(float health) {

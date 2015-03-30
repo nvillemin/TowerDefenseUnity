@@ -7,13 +7,13 @@ public class Wave : MonoBehaviour {
 
 	public int number; // Actual wave number
 
-	List<WaveConfig> wc; // List storing the config of all the different waves
-	int enemiesToSpawn; // Number of enemies left to spawn
-	Vector3 startPosition; // Starting position of the ennemies
-	float cooldown, cooldownMax; // Enemy spawning cooldown
+	private List<WaveConfig> wc; // List storing the config of all the different waves
+	private int enemiesToSpawn; // Number of enemies left to spawn
+	private Vector3 startPosition; // Starting position of the ennemies
+	private float cooldown, cooldownMax; // Enemy spawning cooldown
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
 		number = 0;
 		enemiesToSpawn = 0;
 		startPosition = Game.Instance.GetWaypoint(0).transform.position;
@@ -22,15 +22,15 @@ public class Wave : MonoBehaviour {
 
 		// Initialize all waves (count, prefab, health)
 		wc = new List<WaveConfig> {
-			new WaveConfig(20, EnemyAirPrefab, 100.0f), // Wave 1
-			new WaveConfig(20, EnemyFirePrefab, 130.0f), // Wave 2
-			new WaveConfig(20, EnemyWaterPrefab, 170.0f), // Wave 3
-			new WaveConfig(20, EnemyEarthPrefab, 220.0f)  // Wave 4
+			new WaveConfig(20, EnemyAirPrefab, 20.0f), // Wave 1
+			new WaveConfig(20, EnemyFirePrefab, 30.0f), // Wave 2
+			new WaveConfig(20, EnemyWaterPrefab, 45.0f), // Wave 3
+			new WaveConfig(20, EnemyEarthPrefab, 75.0f)  // Wave 4
 		};
 	}
 
 	// Called once per frame
-	void Update () {
+	private void Update () {
 		if(enemiesToSpawn > 0) {
 			// Reduce the cooldown each frame
 			if(cooldown > 0) {

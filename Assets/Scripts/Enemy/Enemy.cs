@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 
 public abstract class Enemy : MonoBehaviour {
-	protected float speed, health; // Movement speed and health of the enemy
+	protected float speed, health;
 	protected float[] elemDamage; // Resistance against elements. (default 1.0->100% damage; 0.75->75% damage etc.)
+	protected int reward;
 
-    int waypointIndex; // Index of the next waypoint
-	Waypoint nextWaypoint; // Next waypoint to reach
+	private int waypointIndex; // Index of the next waypoint
+	private Waypoint nextWaypoint; // Next waypoint to reach
 
 	// Initialization
 	public virtual void Awake () {
@@ -18,7 +19,7 @@ public abstract class Enemy : MonoBehaviour {
 	}
 
 	// Called once per frame
-	void Update () {
+	private void Update () {
 		// Still hasn't reached the last waypoint
 		if(nextWaypoint != null) {
 			transform.Rotate(Vector3.back, 2); // Rotate animation
@@ -32,7 +33,7 @@ public abstract class Enemy : MonoBehaviour {
 	}
 
 	// Colliding with another object
-	void OnTriggerEnter2D(Collider2D col) {
+	private void OnTriggerEnter2D(Collider2D col) {
 		switch(col.gameObject.tag) {
 		// Colliding with a waypoint
 		case "Waypoint":
@@ -52,6 +53,7 @@ public abstract class Enemy : MonoBehaviour {
 			// The projectile damage is higher than the health of the enemy
 			if(health <= proj.damage) {
 				Destroy(gameObject); // Remove the enemy from the game
+				Game.Instance.updateMoney(Game.Instance.money + reward);
 			}
 			else {
 				health -= proj.damage;
@@ -61,7 +63,7 @@ public abstract class Enemy : MonoBehaviour {
 	}
 
 	// Move to the next checkpoint
-	void Move() {
+	private void Move() {
 		float step = speed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards(transform.position, nextWaypoint.transform.position, step);
 	}

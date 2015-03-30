@@ -4,46 +4,52 @@ using System.Collections;
 public class Game : MonoBehaviour {
     static Game instance;
     public static Game Instance { get { return instance; } }
-    public string towerSelection { get; set; }
-	public GUIText lifesText, wavesText, moneyText;
+	public GameObject currentTowerPrefab { get; set; }
+	public GUIText lifesText, wavesText, moneyText, infoTitleText, infoText;
 	public GameObject highlight; // Yellow highlight sprite for selections
+	public int money; // Money available for towers
 
-    Grid grid; // The grid of the game, containing the path and tower locations
-	Wave wave; // The actual wave of ennemies
-
-	int lifes, money; // Number of times enemies can reach the end before the game is over and money available for towers
+    private Grid grid; // The grid of the game, containing the path and tower locations
+	private Wave wave; // The actual wave of ennemies
+	private int lifes; // Number of times enemies can reach the end before the game is over
 
 	// Creation of the game
-    void Awake() {
+	private void Awake() {
         DontDestroyOnLoad(gameObject);
         instance = this;
 		grid = (Grid)transform.Find("Grid").gameObject.GetComponent("Grid");
 		wave = (Wave)transform.Find("Wave").gameObject.GetComponent("Wave");
-		towerSelection = "None";
 		lifes = 20;
 		money = 50;
     }
 
 	// Destruction of the game
-    void OnDestroy() {
+	private void OnDestroy() {
         instance = null;
     }
 
 	// Called once per frame
-	void Update () {
+	private void Update () {
 		if (Input.GetKeyDown("space")) {
 			wave.Next();
 			wavesText.text = "WAVE " + wave.number;
 		}
 		else if (Input.GetKeyDown("escape")) {
-			towerSelection = "None";
+			currentTowerPrefab = null;
 			highlight.GetComponent<SpriteRenderer>().enabled = false;
+			infoTitleText.text = "";
+			infoText.text = "";
 		}
 	}
 
 	public void LoseLife() {
 		lifes--;
-		lifesText.text = "LIFES: " + lifes;
+		lifesText.text = "LIFES " + lifes;
+	}
+
+	public void updateMoney(int value) {
+		money = value;
+		moneyText.text = "MONEY " + money;
 	}
 
 	public void HighlightObject(Vector3 position) {

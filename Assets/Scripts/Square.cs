@@ -2,60 +2,47 @@
 using System.Collections;
 
 public class Square : MonoBehaviour {
-	public GameObject TowerAirPrefab, TowerFirePrefab, TowerWaterPrefab, TowerEarthPrefab;
 	public Sprite squareSprite;
 
-	GameObject currentTowerPrefab;
-	SpriteRenderer spriteRenderer;
-    Tower tower;
+	private SpriteRenderer spriteRenderer;
+	private Tower tower;
 
-	void Awake() {
+	private void Awake() {
 		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
-	void OnMouseOver() { // Change this?
-		if (tower == null && Input.GetKeyDown("escape")) {
+	private void OnMouseOver() { // Change this?
+		if (Input.GetKeyDown("escape") && tower == null) {
 			OnMouseExit();
 		}
 	}
 
-    void OnMouseEnter() {
-		if (tower == null && Game.Instance.towerSelection != "None") {
+	private void OnMouseEnter() {
+		if (tower == null && Game.Instance.currentTowerPrefab != null) {
 			spriteRenderer.material.color -= new Color(0, 0, 0, 0.35f);
-			SetCurrentTower();
-			spriteRenderer.sprite = currentTowerPrefab.GetComponent<SpriteRenderer>().sprite;
+			spriteRenderer.sprite = Game.Instance.currentTowerPrefab.GetComponent<SpriteRenderer>().sprite;
         }
     }
 
-    void OnMouseExit() {
-		if (tower == null && Game.Instance.towerSelection != "None") {
+	private void OnMouseExit() {
+		if (tower == null && Game.Instance.currentTowerPrefab != null) {
 			spriteRenderer.material.color += new Color(0, 0, 0, 0.35f);
 			spriteRenderer.sprite = squareSprite;
         }
     }
 
-	void OnMouseDown() {
-		if (tower == null && Game.Instance.towerSelection != "None") {
-			SetCurrentTower();
-			tower = (Tower)((GameObject)Instantiate(currentTowerPrefab, new Vector3(this.transform.position.x, this.transform.position.y, 6f), Quaternion.identity)).GetComponent("Tower");
-			spriteRenderer.material.color -= new Color(0, 0, 0, spriteRenderer.material.color.a);
-		}
-	}
-
-	void SetCurrentTower() {
-		switch(Game.Instance.towerSelection) {
-		case "Air":
-			currentTowerPrefab = TowerAirPrefab;
-			break;
-		case "Fire":
-			currentTowerPrefab = TowerFirePrefab;
-			break;
-		case "Water":
-			currentTowerPrefab = TowerWaterPrefab;
-			break;
-		case "Earth":
-			currentTowerPrefab = TowerEarthPrefab;
-			break;
+	private void OnMouseDown() {
+		if (tower == null && Game.Instance.currentTowerPrefab != null) {
+			int towerElement = Game.Instance.currentTowerPrefab.GetComponent<Tower>().GetElement();
+			int towerPrice = Global.TowerStats[towerElement].price;
+			if (towerPrice <= Game.Instance.money) {
+				Game.Instance.updateMoney(Game.Instance.money - towerPrice);
+				tower = (Tower)((GameObject)Instantiate(Game.Instance.currentTowerPrefab, new Vector3(this.transform.position.x, this.transform.position.y, 6f), Quaternion.identity)).GetComponent("Tower");
+				spriteRenderer.material.color -= new Color(0, 0, 0, spriteRenderer.material.color.a);
+			}
+			else {
+				// Show message not enough money
+			}
 		}
 	}
 }

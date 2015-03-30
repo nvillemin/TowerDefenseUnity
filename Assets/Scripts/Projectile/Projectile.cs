@@ -4,17 +4,17 @@ using System.Collections;
 public class Projectile : MonoBehaviour {
 	public float damage { get; set; }
 
-	Enemy target;
-	float speed;
+	private Enemy target;
+	private float speed;
 
 	// Initialization
-	void Awake () {
+	private void Awake () {
 		speed = 1.5f;
 		damage = 25f;
 	}
 	
 	// Called once per frame
-	void Update () {
+	private void Update () {
 		// The target is still alive
 		if(target != null) {
 			float step = speed * Time.deltaTime;
@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour {
 	}
 
 	// Colliding with another object
-	void OnTriggerEnter2D(Collider2D col) {
+	private void OnTriggerEnter2D(Collider2D col) {
 		// Colliding with an enemy
 		if(col.gameObject.tag == "Enemy") {
 			Destroy(gameObject); // Remove the projectile from the game

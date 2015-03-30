@@ -6,9 +6,10 @@ public class EnemyEarth : Enemy {
 	// Initialization
 	public override void Awake () {
 		base.Awake();
-		elemDamage[(int)Elements.Earth] = 0.75f;
-		elemDamage[(int)Elements.Air] = 1.25f;
+		elemDamage[(int)Global.Elements.Earth] = 0.75f;
+		elemDamage[(int)Global.Elements.Air] = 1.25f;
 		speed = 0.6f; // Earth enemies are slower than other enemies
+		reward = 4;
 	}
 
 	public override void SetHealth(float health) {
