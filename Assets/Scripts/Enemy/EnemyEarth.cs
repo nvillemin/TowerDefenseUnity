@@ -13,6 +13,6 @@ public class EnemyEarth : Enemy {
 	}
 
 	public override void SetHealth(float health) {
-		this.health = health * 1.2f; // Earth enemies have 20% more health than other enemies
+		base.SetHealth(health * 1.2f); // Earth enemies have 20% more health than other enemies
 	}
 }

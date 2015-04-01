@@ -13,6 +13,6 @@ public class EnemyAir : Enemy {
 	}
 
 	public override void SetHealth(float health) {
-		this.health = health * 0.8f; // Air enemies have 20% less health than other enemies
+		base.SetHealth(health * 0.8f); // Air enemies have 20% less health than other enemies
 	}
 }

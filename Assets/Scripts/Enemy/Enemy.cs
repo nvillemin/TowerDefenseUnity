@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 
 public abstract class Enemy : MonoBehaviour {
-	protected float speed, health;
+	protected float speed, health, healthMax; // healthMax is used to show a percentage of the health bar
 	protected float[] elemDamage; // Resistance against elements. (default 1.0->100% damage; 0.75->75% damage etc.)
 	protected int reward;
 
 	private int waypointIndex; // Index of the next waypoint
 	private Waypoint nextWaypoint; // Next waypoint to reach
+	private GameObject healthBar;
 
 	// Initialization
 	public virtual void Awake () {
@@ -16,6 +17,7 @@ public abstract class Enemy : MonoBehaviour {
 		speed = 0.8f;
         waypointIndex = 1;
         nextWaypoint = Game.Instance.GetWaypoint(1);
+		healthBar = (GameObject)Instantiate(Game.Instance.healthBarPrefab, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
 	}
 
 	// Called once per frame
@@ -24,6 +26,7 @@ public abstract class Enemy : MonoBehaviour {
 		if(nextWaypoint != null) {
 			transform.Rotate(Vector3.back, 2); // Rotate animation
 			Move();
+			healthBar.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
 		}
 		// The last checkpoint has been reached
 		else {
@@ -52,11 +55,13 @@ public abstract class Enemy : MonoBehaviour {
 
 			// The projectile damage is higher than the health of the enemy
 			if(health <= proj.damage) {
+				Destroy(healthBar); // Remove the health bar from the game
 				Destroy(gameObject); // Remove the enemy from the game
 				Game.Instance.updateMoney(Game.Instance.money + reward);
 			}
 			else {
 				health -= proj.damage;
+				healthBar.transform.localScale = new Vector3(health / healthMax, 1, 1);
 			}
 			break;
 		}
@@ -69,6 +74,7 @@ public abstract class Enemy : MonoBehaviour {
 	}
 
 	public virtual void SetHealth(float health) {
+		this.healthMax = health;
 		this.health = health;
 	}
 }

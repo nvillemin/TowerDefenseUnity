@@ -8,6 +8,7 @@ public class Game : MonoBehaviour {
 	public GUIText lifesText, wavesText, moneyText, infoTitleText, infoText;
 	public GameObject highlight; // Yellow highlight sprite for selections
 	public int money; // Money available for towers
+	public GameObject healthBarPrefab;
 
     private Grid grid; // The grid of the game, containing the path and tower locations
 	private Wave wave; // The actual wave of ennemies
