@@ -26,11 +26,12 @@ public abstract class Enemy : MonoBehaviour {
 		if(nextWaypoint != null) {
 			transform.Rotate(Vector3.back, 2); // Rotate animation
 			Move();
-			healthBar.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+			healthBar.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z - 1.0f);
 		}
 		// The last checkpoint has been reached
 		else {
 			Game.Instance.LoseLife(); // Trigger the game function to lose a life
+			Destroy(healthBar);
 			Destroy(gameObject); // Remove the enemy from the game
 		}
 	}

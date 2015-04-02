@@ -20,13 +20,34 @@ public class Wave : MonoBehaviour {
 		cooldown = 0f;
 		cooldownMax = 1.0f;
 
-		// Initialize all waves (count, prefab, health)
-		wc = new List<WaveConfig> {
-			new WaveConfig(20, EnemyAirPrefab, 20.0f), // Wave 1
-			new WaveConfig(20, EnemyFirePrefab, 30.0f), // Wave 2
-			new WaveConfig(20, EnemyWaterPrefab, 45.0f), // Wave 3
-			new WaveConfig(20, EnemyEarthPrefab, 75.0f)  // Wave 4
-		};
+		// Initialize all waves (count, prefab, health, cooldown)
+		wc = new List<WaveConfig>();
+		int enemyCount = 20;
+		float health = 20.0f;
+		float cd = 1.0f;
+		GameObject prefab = null;
+		for (int i=0; i<200; ++i) {
+			switch(i % 4) {
+			case 0:
+				prefab = EnemyAirPrefab;
+				break;
+			case 1:
+				prefab = EnemyFirePrefab;
+				break;
+			case 2:
+				prefab = EnemyWaterPrefab;
+				break;
+			case 3:
+				prefab = EnemyEarthPrefab;
+				break;
+			}
+			wc.Add(new WaveConfig(enemyCount, prefab, health, cd));
+			health = (health + 10f) * 1.1f;
+			if(enemyCount < 100) {
+				enemyCount += 2;
+			}
+			cd = 20f / enemyCount;
+		}
 	}
 
 	// Called once per frame
@@ -55,6 +76,7 @@ public class Wave : MonoBehaviour {
 	public void Next() {
 		if(number < wc.Count && enemiesToSpawn == 0) {
 			number++;
+			cooldownMax = wc[number-1].cooldown;
 			enemiesToSpawn = wc[number-1].count;
 		}
 	}

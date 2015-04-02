@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour {
 
 	// Initialization
 	private void Awake () {
-		speed = 1.5f;
+		speed = 3.0f;
 		damage = 25f;
 	}
 	
