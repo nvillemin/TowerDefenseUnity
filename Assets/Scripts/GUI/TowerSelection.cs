@@ -37,6 +37,6 @@ public class TowerSelection : MonoBehaviour {
 		Game.Instance.infoText.text += "Damage: " + Global.TowerStats[elem].damage + "\n";
 		Game.Instance.infoText.text += "Cooldown: " + Global.TowerStats[elem].cooldown + "s" + "\n";
 		Game.Instance.infoText.text += "Range: " + Global.TowerStats[elem].range + "\n\n";
-		Game.Instance.infoText.text += "No special effect yet\n";
+		Game.Instance.infoText.text += "Effect: " + Global.TowerStats[elem].effect + "\n";
 	}
 }

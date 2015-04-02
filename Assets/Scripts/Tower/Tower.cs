@@ -38,7 +38,7 @@ public abstract class Tower : MonoBehaviour {
 		if(enemies.Count > 0 && cooldown <= 0) {
 			Projectile proj = (Projectile)((GameObject)Instantiate(projectilePrefab, new Vector3(this.transform.position.x, this.transform.position.y, 4f), Quaternion.identity)).GetComponent("Projectile");
 			proj.damage = this.damage;
-			proj.SetTarget(enemies[0]); // Target first enemy
+			proj.target = enemies[0]; // Target first enemy
 			cooldown = cooldownMax; // Projectile fired, reset cooldown
 		}
 	}

@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Projectile : MonoBehaviour {
+public abstract class Projectile : MonoBehaviour {
+	public Enemy target { get; set; }
 	public float damage { get; set; }
 
-	private Enemy target;
-	private float speed;
+	protected int element;
+	protected float speed;
 
-	// Initialization
-	private void Awake () {
-		speed = 3.0f;
-		damage = 25f;
-	}
-	
 	// Called once per frame
 	private void Update () {
 		// The target is still alive
@@ -27,15 +22,12 @@ public class Projectile : MonoBehaviour {
 	}
 
 	// Colliding with another object
-	private void OnTriggerEnter2D(Collider2D col) {
+	protected virtual void OnTriggerEnter2D(Collider2D col) {
 		// Colliding with an enemy
 		if(col.gameObject.tag == "Enemy") {
 			Destroy(gameObject); // Remove the projectile from the game
 		}
 	}
 
-	// Set the target of the projectile
-	public void SetTarget(Enemy enemy) {
-		target = enemy;
-	}
+	public int GetElement() { return this.element; }
 }

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 
 public abstract class Enemy : MonoBehaviour {
-	protected float speed, health, healthMax; // healthMax is used to show a percentage of the health bar
+	protected float speed, healthMax; // healthMax is used to show a percentage of the health bar
 	protected float[] elemDamage; // Resistance against elements. (default 1.0->100% damage; 0.75->75% damage etc.)
 	protected int reward;
-
+	public float health;
 	private int waypointIndex; // Index of the next waypoint
 	private Waypoint nextWaypoint; // Next waypoint to reach
 	private GameObject healthBar;
@@ -53,17 +53,7 @@ public abstract class Enemy : MonoBehaviour {
 		// Colliding with a projectile
 		case "Projectile":
 			Projectile proj = col.gameObject.GetComponent<Projectile>();
-
-			// The projectile damage is higher than the health of the enemy
-			if(health <= proj.damage) {
-				Destroy(healthBar); // Remove the health bar from the game
-				Destroy(gameObject); // Remove the enemy from the game
-				Game.Instance.updateMoney(Game.Instance.money + reward);
-			}
-			else {
-				health -= proj.damage;
-				healthBar.transform.localScale = new Vector3(health / healthMax, 1, 1);
-			}
+			TakeDamage(proj.damage * elemDamage[proj.GetElement()]);
 			break;
 		}
 	}
@@ -72,6 +62,19 @@ public abstract class Enemy : MonoBehaviour {
 	private void Move() {
 		float step = speed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards(transform.position, nextWaypoint.transform.position, step);
+	}
+
+	public void TakeDamage(float damage) {
+		// The projectile damage is higher than the health of the enemy
+		if(health <= damage) {
+			Destroy(healthBar); // Remove the health bar from the game
+			Destroy(gameObject); // Remove the enemy from the game
+			Game.Instance.updateMoney(Game.Instance.money + reward);
+		}
+		else {
+			health -= damage;
+			healthBar.transform.localScale = new Vector3(health / healthMax, 1, 1);
+		}
 	}
 
 	public virtual void SetHealth(float health) {
