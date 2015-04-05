@@ -8,6 +8,6 @@ public class EnemyWater : Enemy {
 		base.Awake();
 		elemDamage[(int)Global.Elements.Water] = 0.75f;
 		elemDamage[(int)Global.Elements.Earth] = 1.25f;
-		reward = 3;
+		//reward = 3;
 	}
 }

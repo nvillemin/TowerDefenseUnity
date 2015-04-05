@@ -9,7 +9,7 @@ public class EnemyAir : Enemy {
 		elemDamage[(int)Global.Elements.Air] = 0.75f;
 		elemDamage[(int)Global.Elements.Fire] = 1.25f;
 		speed = 1f; // Air enemies are faster than other enemies
-		reward = 1;
+		//reward = 1;
 	}
 
 	public override void SetHealth(float health) {

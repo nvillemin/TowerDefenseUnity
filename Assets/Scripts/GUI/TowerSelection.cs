@@ -6,7 +6,8 @@ public class TowerSelection : MonoBehaviour {
 
 	// Selection of the tower to place
 	private void OnMouseDown() {
-		Game.Instance.HighlightObject(transform.position);
+		Game.Instance.HighlightObject(transform.position, 0.8f);
+		Game.Instance.rangeIndicator.GetComponent<SpriteRenderer>().enabled = false;
 		SetCurrentTower();
 		SetTextInfo();
 	}
@@ -33,10 +34,10 @@ public class TowerSelection : MonoBehaviour {
 	private void SetTextInfo() {
 		int elem = Game.Instance.currentTowerPrefab.GetComponent<Tower>().element;
 		Game.Instance.infoTitleText.text = Global.TowerStats[elem].name;
-		Game.Instance.infoText.text = "Price: " + Global.TowerStats[elem].price + "\n";
-		Game.Instance.infoText.text += "Damage: " + Global.TowerStats[elem].damage + "\n";
-		Game.Instance.infoText.text += "Cooldown: " + Global.TowerStats[elem].cooldown + "s" + "\n";
-		Game.Instance.infoText.text += "Range: " + Global.TowerStats[elem].range + "\n\n";
-		Game.Instance.infoText.text += "Effect: " + Global.TowerStats[elem].effect + "\n";
+		Game.Instance.infoText.text = "PRICE: " + Global.TowerStats[elem].price + "\n";
+		Game.Instance.infoText.text += "DAMAGE: " + Global.TowerStats[elem].damage + "\n";
+		Game.Instance.infoText.text += "COOLDOWN: " + Global.TowerStats[elem].cooldown + "s" + "\n";
+		Game.Instance.infoText.text += "RANGE: " + Global.TowerStats[elem].range + "\n\n";
+		Game.Instance.infoText.text += "EFFECT: " + Global.TowerStats[elem].effect + "\n";
 	}
 }

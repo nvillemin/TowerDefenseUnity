@@ -4,12 +4,15 @@ using System.Collections.Generic;
 
 public abstract class Tower : MonoBehaviour {
 	public int element;
+	public string effect { get; private set; } // Special effect of the tower
+	public string type { get; private set; } // Type of the tower
 
 	protected GameObject projectilePrefab;
 	protected float cooldownMax, damage;
 
 	private float cooldown; // Cooldown between shots
 	private List<Enemy> enemies; // Enemies in range of the tower
+
 	
 	// Tower creation
 	public virtual void Awake () {
@@ -18,6 +21,8 @@ public abstract class Tower : MonoBehaviour {
 		damage = Global.TowerStats[element].damage;
 		enemies = new List<Enemy>();
 		cooldown = 0f;
+		effect = Global.TowerStats[element].effect;
+		type = Global.TowerStats[element].name;
 	}
 	
 	// Called once per frame
@@ -60,4 +65,6 @@ public abstract class Tower : MonoBehaviour {
 	}
 
 	public int GetElement() { return this.element; }
+	public float GetDamage() { return this.damage; }
+	public float GetCooldown() { return this.cooldownMax; }
 }

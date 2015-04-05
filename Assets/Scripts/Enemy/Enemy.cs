@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public abstract class Enemy : MonoBehaviour {
 	protected float speed, healthMax; // healthMax is used to show a percentage of the health bar
 	protected float[] elemDamage; // Resistance against elements. (default 1.0->100% damage; 0.75->75% damage etc.)
-	protected int reward;
+	//protected int reward;
 	public float health;
 	private int waypointIndex; // Index of the next waypoint
 	private Waypoint nextWaypoint; // Next waypoint to reach
@@ -69,7 +69,7 @@ public abstract class Enemy : MonoBehaviour {
 		if(health <= damage) {
 			Destroy(healthBar); // Remove the health bar from the game
 			Destroy(gameObject); // Remove the enemy from the game
-			Game.Instance.updateMoney(Game.Instance.money + reward);
+			Game.Instance.UpdateMoney(Game.Instance.money + Game.Instance.wave.number);
 		}
 		else {
 			health -= damage;

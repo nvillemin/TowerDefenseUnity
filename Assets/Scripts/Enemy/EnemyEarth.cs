@@ -9,7 +9,7 @@ public class EnemyEarth : Enemy {
 		elemDamage[(int)Global.Elements.Earth] = 0.75f;
 		elemDamage[(int)Global.Elements.Air] = 1.25f;
 		speed = 0.6f; // Earth enemies are slower than other enemies
-		reward = 4;
+		//reward = 4;
 	}
 
 	public override void SetHealth(float health) {

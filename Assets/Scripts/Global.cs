@@ -32,9 +32,9 @@ public static class Global {
 	// Stats of all available towers
 	public static TowerStruct[] TowerStats = {
 		//				NAME			PRICE	DAMAGE	COOLDOWN	RANGE	EFFECT
-		new TowerStruct("Air Tower",	15,		5f,		0.25f, 		1.2f,	"None"),
-		new TowerStruct("Fire Tower",	15,		15f,	1.0f, 		1.4f,	"AOE"),
-		new TowerStruct("Water Tower",	15,		5f,		1.0f, 		1.0f,	"None yet"),
-		new TowerStruct("Earth Tower",	15,		40f,	2.0f, 		1.7f, 	"None")
+		new TowerStruct("AIR TOWER",	15,		5f,		0.25f, 		1.2f,	"None"),
+		new TowerStruct("FIRE TOWER",	30,		15f,	1.0f, 		1.4f,	"Area damage"),
+		new TowerStruct("WATER TOWER",	30,		5f,		1.0f, 		1.0f,	"None yet"),
+		new TowerStruct("EARTH TOWER",	20,		40f,	2.0f, 		1.7f, 	"None")
 	};
 }

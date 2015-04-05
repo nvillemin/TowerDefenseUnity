@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -64,6 +65,7 @@ public class Wave : MonoBehaviour {
 				enemiesToSpawn--;
 				if(enemiesToSpawn == 0) {
 					cooldown = 0f;
+					Game.Instance.startButton.GetComponent<Button>().interactable = true;
 				}
 				else {
 					cooldown = cooldownMax;

@@ -19,15 +19,18 @@ public class Square : MonoBehaviour {
 
 	private void OnMouseEnter() {
 		if (tower == null && Game.Instance.currentTowerPrefab != null) {
-			spriteRenderer.material.color -= new Color(0, 0, 0, 0.35f);
+//			spriteRenderer.material.color -= new Color(0, 0, 0, 0.35f);
 			spriteRenderer.sprite = Game.Instance.currentTowerPrefab.GetComponent<SpriteRenderer>().sprite;
+			int elem = Game.Instance.currentTowerPrefab.GetComponent<Tower>().element;
+			Game.Instance.DisplayRange(transform.position, Global.TowerStats[elem].range);
         }
     }
 
 	private void OnMouseExit() {
 		if (tower == null && Game.Instance.currentTowerPrefab != null) {
-			spriteRenderer.material.color += new Color(0, 0, 0, 0.35f);
+//			spriteRenderer.material.color += new Color(0, 0, 0, 0.35f);
 			spriteRenderer.sprite = squareSprite;
+			Game.Instance.rangeIndicator.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
@@ -36,13 +39,15 @@ public class Square : MonoBehaviour {
 			int towerElement = Game.Instance.currentTowerPrefab.GetComponent<Tower>().GetElement();
 			int towerPrice = Global.TowerStats[towerElement].price;
 			if (towerPrice <= Game.Instance.money) {
-				Game.Instance.updateMoney(Game.Instance.money - towerPrice);
+				Game.Instance.UpdateMoney(Game.Instance.money - towerPrice);
 				tower = (Tower)((GameObject)Instantiate(Game.Instance.currentTowerPrefab, new Vector3(this.transform.position.x, this.transform.position.y, 6f), Quaternion.identity)).GetComponent("Tower");
 				spriteRenderer.material.color -= new Color(0, 0, 0, spriteRenderer.material.color.a);
-			}
-			else {
+				Game.Instance.rangeIndicator.GetComponent<SpriteRenderer>().enabled = false;
+			} else {
 				// Show message not enough money
 			}
+		} else if (tower != null) {
+			Game.Instance.SelectTower(tower);
 		}
 	}
 }
