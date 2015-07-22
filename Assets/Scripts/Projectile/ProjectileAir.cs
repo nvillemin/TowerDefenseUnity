@@ -7,5 +7,6 @@ public class ProjectileAir : Projectile {
 	private void Awake () {
 		element = (int)Global.Elements.Air;
 		speed = 3.0f;
+//		effect = Global.Effects.None;
 	}
 }

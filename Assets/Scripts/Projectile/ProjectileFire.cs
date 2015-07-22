@@ -9,6 +9,7 @@ public class ProjectileFire : Projectile {
 	private void Awake () {
 		element = (int)Global.Elements.Fire;
 		speed = 2.0f;
+//		effect = Global.Effects.None;
 		damageZone = (DamageZone)transform.Find("DamageZone").gameObject.GetComponent("DamageZone");
 	}
 

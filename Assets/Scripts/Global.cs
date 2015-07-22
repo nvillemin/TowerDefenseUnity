@@ -22,11 +22,17 @@ public static class Global {
 	};
 
 	// All the elements of the game are listed here
-	public enum Elements{
+	public enum Elements {
 		Air,
 		Fire,
 		Water,
 		Earth
+	};
+
+	// All the effects of the game are listed here
+	public enum Effects {
+//		None,
+		Slow
 	};
 
 	// Stats of all available towers

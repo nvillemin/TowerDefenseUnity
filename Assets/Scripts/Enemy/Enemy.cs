@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public abstract class Enemy : MonoBehaviour {
-	protected float speed, healthMax; // healthMax is used to show a percentage of the health bar
+	protected float healthMax; // healthMax is used to show a percentage of the health bar
 	protected float[] elemDamage; // Resistance against elements. (default 1.0->100% damage; 0.75->75% damage etc.)
-	//protected int reward;
-	public float health;
+	public float health, speed;
 	private int waypointIndex; // Index of the next waypoint
 	private Waypoint nextWaypoint; // Next waypoint to reach
 	private GameObject healthBar;
+	private Effect[] effects;
 
 	// Initialization
 	public virtual void Awake () {
@@ -18,6 +18,7 @@ public abstract class Enemy : MonoBehaviour {
         waypointIndex = 1;
         nextWaypoint = Game.Instance.GetWaypoint(1);
 		healthBar = (GameObject)Instantiate(Game.Instance.healthBarPrefab, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
+		effects = new Effect[System.Enum.GetValues(typeof(Global.Effects)).Length];
 	}
 
 	// Called once per frame
@@ -53,7 +54,18 @@ public abstract class Enemy : MonoBehaviour {
 		// Colliding with a projectile
 		case "Projectile":
 			Projectile proj = col.gameObject.GetComponent<Projectile>();
-			TakeDamage(proj.damage * elemDamage[proj.GetElement()]);
+
+			// Apply projectile effect
+			if(proj.effect != null) {
+				if(effects[proj.effect.id] != null) {
+					effects[proj.effect.id].Reset();
+				} else {
+					effects[proj.effect.id] = proj.effect;
+					effects[proj.effect.id].Activate(this);
+				}
+			}
+
+			TakeDamage(proj.damage * elemDamage[proj.element]);
 			break;
 		}
 	}
